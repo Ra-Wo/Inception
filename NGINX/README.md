@@ -8,6 +8,10 @@ You can check the installed version of OpenSSL command using the following comma
 openssl version
 ```
 
+- What is digital signature?: https://www.youtube.com/watch?v=TmA2QWSLSPg&t=2s
+- How SSL certificate works? https://www.youtube.com/watch?v=33VYnE7Bzpk
+- PKI: self-signed digital certificate? https://www.youtube.com/watch?v=oplVr3Ha174
+
 ### Create new Private Key and CSR
 
 ```bash
@@ -59,4 +63,9 @@ for more info :
     - https://www.geeksforgeeks.org/practical-uses-of-openssl-command-in-linux/
 
 resources:
-    - https://www.digicert.com/kb/ssl-support/openssl-quick-reference-guide.htm
+    - https://www.digicert.com/kb/ssl-support/openssl-quick-reference-guide.ht
+
+# NGINX
+
+The NGINX Crash Course 
+    - https://www.youtube.com/watch?v=7VAI73roXaY
