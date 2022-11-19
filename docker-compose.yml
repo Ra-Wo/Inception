@@ -1,38 +1,31 @@
 version: "3"
 
 services:
-  db:
-    container_name: mariadb
+  mariadb:
     build: ./requirements/mariaDB/
+    container_name: mariadb
     ports:
       - 3306:3306
-    #image: mariadb:10
-    #ports:
-    #  - "3306:3306"
-    #volumes:
-    #  - ./mysql_data:/var/lib/mysql
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
     environment:
       MYSQL_DATABASE: "wordpress"
       MYSQL_USER: "rachid"
       MYSQL_PASSWORD: "1234"
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: "root"
     restart: always
 
   wordpress:
     container_name: wordpress
     depends_on:
-      - db
+      - mariadb
     image: wordpress:latest
     ports: ['9000:80']
-    links: ['db:db']
     volumes:
-      - ./wordpress_data:/var/www/html
+      - ./data/wordpress:/var/www/html
     environment:
-      WORDPRESS_DB_HOST: wordpressDB
-      WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DB_USER: rachid
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_NAME: "wordpress"
+      WORDPRESS_DB_USER: "rachid"
       WORDPRESS_DB_PASSWORD: "1234"
     restart: always
-
-volumes:
-  db_data: {}
