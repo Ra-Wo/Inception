@@ -1,31 +1,54 @@
-version: "3"
+version: "3.9"
+
+volumes:
+  db_data:
+    driver: local 
+
+networks:
+  Docker-Network:
+    name: Docker-Network
+    driver: bridge
 
 services:
-  mariadb:
-    build: ./requirements/mariaDB/
+  db:
     container_name: mariadb
+    build:
+      context: ./requirements/mariaDB/
+      args:
+        ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        DATABASE: ${MYSQL_DATABASE}
+        USER: ${MYSQL_USER}
+        PASSWORD: ${MYSQL_PASSWORD}
+      
+    #image: mariadb:latest
     ports:
       - 3306:3306
     volumes:
-      - ./data/mariadb:/var/lib/mysql
-    environment:
-      MYSQL_DATABASE: "wordpress"
-      MYSQL_USER: "rachid"
-      MYSQL_PASSWORD: "1234"
-      MYSQL_ROOT_PASSWORD: "root"
+      - db_data:/var/lib/mysql
+    #environment:
+    #  MYSQL_DATABASE: "${MYSQL_DATABASE}"
+    #  MYSQL_USER: "${MYSQL_USER}"
+    #  MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+    #  MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+    networks:
+      - Docker-Network
     restart: always
 
   wordpress:
     container_name: wordpress
-    depends_on:
-      - mariadb
+    #build: ./requirements/wordpress/
     image: wordpress:latest
-    ports: ['9000:80']
+    depends_on:
+      - db
+    ports:
+      - 9000:80
     volumes:
       - ./data/wordpress:/var/www/html
     environment:
-      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_HOST: db
       WORDPRESS_DB_NAME: "wordpress"
-      WORDPRESS_DB_USER: "rachid"
+      WORDPRESS_DB_USER: "roudouch"
       WORDPRESS_DB_PASSWORD: "1234"
+    networks:
+      - Docker-Network
     restart: always
