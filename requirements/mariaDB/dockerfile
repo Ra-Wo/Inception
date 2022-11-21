@@ -1,9 +1,9 @@
 FROM debian:buster
 
-ARG ROOT_PASSWORD
-ARG DATABASE
-ARG USER
-ARG PASSWORD
+#ARG ROOT_PASSWORD
+#ARG DATABASE
+#ARG USER
+#ARG PASSWORD
 
 RUN apt-get -y update && apt-get install -y mariadb-server
 # expose the port 3306 for the mysql thats means the port 3306 will be open for the outside world
@@ -12,7 +12,10 @@ EXPOSE 3306
 # copy the script and the configuration file
 COPY ./tools/mariadb.sql /var/www/
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
+
+# run mysql_install_db to create the database
 RUN mysql_install_db
+
 # set the permissions to 664 for the 50-server.cnf 
 # 644 means read only for the owner and group
 RUN chmod 644 /etc/mysql/mariadb.conf.d/50-server.cnf
@@ -20,7 +23,6 @@ RUN chmod 644 /etc/mysql/mariadb.conf.d/50-server.cnf
 # start the mysql then create the database and user by running the sql script as root user 
 RUN service mysql start && mysql -u root < /var/www/mariadb.sql 
 
-RUN echo $MYSQL_DATABASE
 # mysqld_safe is the recommended way to start a mysqld server on Unix.
 # mysqld_safe adds some safety features such as restarting the server when an error ...
 CMD ["mysqld"]

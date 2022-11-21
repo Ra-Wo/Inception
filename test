@@ -1,0 +1,63 @@
+name: inception
+services:
+  db:
+    build:
+      context: /home/rachid/Desktop/Inception/requirements/mariaDB
+      dockerfile: Dockerfile
+      args:
+        MYSQL_DATABASE: wordpress
+        MYSQL_PASSWORD: "1234"
+        MYSQL_ROOT_PASSWORD: root1234
+        MYSQL_USER: root
+    container_name: mariadb
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_PASSWORD: "1234"
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_USER: root
+    networks:
+      Docker-Network: null
+    ports:
+    - mode: ingress
+      target: 3306
+      published: "3306"
+      protocol: tcp
+    restart: always
+    volumes:
+    - type: volume
+      source: db_data
+      target: /var/lib/mysql
+      volume: {}
+  wordpress:
+    container_name: wordpress
+    depends_on:
+      db:
+        condition: service_started
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_PASSWORD: root1234
+      WORDPRESS_DB_USER: root
+    image: wordpress:latest
+    networks:
+      Docker-Network: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: "9000"
+      protocol: tcp
+    restart: always
+    volumes:
+    - type: bind
+      source: /home/rachid/Desktop/Inception/data/wordpress
+      target: /var/www/html
+      bind:
+        create_host_path: true
+networks:
+  Docker-Network:
+    name: Docker-Network
+    driver: bridge
+volumes:
+  db_data:
+    name: inception_db_data
+    driver: local

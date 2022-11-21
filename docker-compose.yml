@@ -12,24 +12,16 @@ networks:
 services:
   db:
     container_name: mariadb
-    build:
-      context: ./requirements/mariaDB/
-      args:
-        ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-        DATABASE: ${MYSQL_DATABASE}
-        USER: ${MYSQL_USER}
-        PASSWORD: ${MYSQL_PASSWORD}
-      
-    #image: mariadb:latest
+    build: ./requirements/mariaDB/
     ports:
       - 3306:3306
     volumes:
       - db_data:/var/lib/mysql
-    #environment:
-    #  MYSQL_DATABASE: "${MYSQL_DATABASE}"
-    #  MYSQL_USER: "${MYSQL_USER}"
-    #  MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
-    #  MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     networks:
       - Docker-Network
     restart: always
@@ -46,9 +38,9 @@ services:
       - ./data/wordpress:/var/www/html
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_NAME: "wordpress"
-      WORDPRESS_DB_USER: "roudouch"
-      WORDPRESS_DB_PASSWORD: "1234"
+      WORDPRESS_DB_NAME: "${MYSQL_DATABASE}"
+      WORDPRESS_DB_USER:  "${MYSQL_USER}"
+      WORDPRESS_DB_PASSWORD: "${MYSQL_PASSWORD}"
     networks:
       - Docker-Network
     restart: always
