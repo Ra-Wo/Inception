@@ -1,8 +1,21 @@
 version: "3.9"
 
 volumes:
-  db_data:
-    driver: local 
+  db:
+    name: db
+    driver: local
+    driver_opts:
+      type: none
+      device: /root/Inception/data/db
+      o: bind
+      
+  wp:
+    name: wp
+    driver: local
+    driver_opts:
+      type: none
+      device: /root/Inception/data/wp
+      o: bind
 
 networks:
   Docker-Network:
@@ -10,13 +23,14 @@ networks:
     driver: bridge
 
 services:
-  db:
+  mariadb:
     container_name: mariadb
     build: ./requirements/mariaDB/
+    image: mariadb
     ports:
       - 3306:3306
     volumes:
-      - db_data:/var/lib/mysql
+      - db:/var/lib/mysql
     environment:
       MYSQL_DATABASE: "${MYSQL_DATABASE}"
       MYSQL_USER: "${MYSQL_USER}"
@@ -31,13 +45,13 @@ services:
     #build: ./requirements/wordpress/
     image: wordpress:latest
     depends_on:
-      - db
+      - mariadb
     ports:
       - 9000:80
     volumes:
-      - ./data/wordpress:/var/www/html
+      - wp:/var/www/html
     environment:
-      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_HOST: mariadb
       WORDPRESS_DB_NAME: "${MYSQL_DATABASE}"
       WORDPRESS_DB_USER:  "${MYSQL_USER}"
       WORDPRESS_DB_PASSWORD: "${MYSQL_PASSWORD}"

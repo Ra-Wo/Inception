@@ -25,5 +25,5 @@ RUN service mysql start && mysql -u root < /var/www/mariadb.sql
 
 # mysqld_safe is the recommended way to start a mysqld server on Unix.
 # mysqld_safe adds some safety features such as restarting the server when an error ...
+
 CMD ["mysqld"]
-#ENTRYPOINT ["tail", "-f", "/dev/null"]

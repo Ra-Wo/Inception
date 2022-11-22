@@ -63,7 +63,7 @@ for more info :
     - https://www.geeksforgeeks.org/practical-uses-of-openssl-command-in-linux/
 
 resources:
-    - https://www.digicert.com/kb/ssl-support/openssl-quick-reference-guide.ht
+    - https://www.digicert.com/kb/ssl-support/openssl-quick-reference-guide.htm
 
 # NGINX
 
