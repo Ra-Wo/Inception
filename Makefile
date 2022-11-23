@@ -7,7 +7,7 @@ re:
 clean:
 	docker system prune -f ; 			\
 	docker rm -f mariadb wordpress ; 	\
-	docker rmi -f mariadb wordpress ; 	\
+	docker rmi -f mariadb wordpress nginx ; 	\
 	docker volume rm db wp ;			\
 	docker network rm Docker-Network ; 	\
 	rm -rf ./data/db/* ./data/wp/* ./data/db/.[!.]* ./data/wp/.[!.]*
