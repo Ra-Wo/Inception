@@ -6,7 +6,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /root/Inception/data/db
+      device: /home/roudouch/Inception/data/db
       o: bind
       
   wp:
@@ -14,7 +14,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /root/Inception/data/wp
+      device: /home/roudouch/Inception/data/wp
       o: bind
 
 networks:
@@ -26,7 +26,7 @@ services:
   mariadb:
     container_name: mariadb
     build: ./requirements/mariaDB/
-    image: mariadb
+    #image: mariadb
     volumes:
       - db:/var/lib/mysql
     environment:
@@ -41,7 +41,7 @@ services:
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress/
-    image: wordpress
+    #image: wordpress
     depends_on:
       - mariadb
     volumes:
@@ -55,7 +55,7 @@ services:
   nginx:
     container_name: nginx
     build: ./requirements/nginx/
-    image: nginx
+    #image: nginx
     depends_on:
       - wordpress
     ports:
