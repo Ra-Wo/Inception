@@ -12,11 +12,17 @@ re:
 
 # clean docker from all containers and images that are created this project
 clean:
-	echo "Cleaning ..."
 	docker system prune -f
-	docker stop $$(docker ps -qa) 2>/dev/null;\
-	docker rm $$(docker ps -qa)  2>/dev/null; \
-	docker rmi -f $$(docker images -qa)  2>/dev/null; \
-	docker volume rm $$(docker volume ls -q)  2>/dev/null;\
-	docker network rm $$(docker network ls -q)  2>/dev/null;\
-	echo "Cleaning VL Disc Space..."
+	docker stop $$(docker ps -qa) ;\
+	docker rm $$(docker ps -qa) ; \
+	docker rmi -f $$(docker images -qa) ; \
+	docker volume rm $$(docker volume ls -q) ;\
+	docker network rm $$(docker network ls -q)  ;\
+	rm -rf /home/roudouch/data/db/*
+	rm -rf /home/roudouch/data/wp/*
+
+create_data_paths:
+	@mkdir /home/roudouch/data
+	@mkdir /home/roudouch/data/db
+	@mkdir /home/roudouch/data/wp
+

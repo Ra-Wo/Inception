@@ -9,7 +9,10 @@ RUN apt -y update && apt -y upgrade && apt install -y \
 
 EXPOSE 9000
 
+# php-fpm
 RUN echo '[www]' > /etc/php/7.3/fpm/pool.d/www.conf
+# www-data is the user that web servers on Ubuntu (Apache, nginx, for example)
+# use by default for normal operation.
 RUN echo 'user = www-data' >> /etc/php/7.3/fpm/pool.d/www.conf
 RUN echo 'group = www-data' >> /etc/php/7.3/fpm/pool.d/www.conf
 RUN echo 'listen = wordpress:9000' >> /etc/php/7.3/fpm/pool.d/www.conf
@@ -22,7 +25,6 @@ RUN echo 'pm.max_spare_servers = 10' >> /etc/php/7.3/fpm/pool.d/www.conf
 # run setup script
 COPY ./config/setup.sh /setup.sh
 RUN chmod +x /setup.sh
-
 ENTRYPOINT ["bash", "/setup.sh"]
 
 # run php-fpm

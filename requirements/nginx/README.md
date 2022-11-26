@@ -50,7 +50,7 @@ It will display the details you entered at the time of creating the CSR file whi
 ###  Verifying a Private Key file
 
 ```bash
-openssl rsa -in private.key -check
+openssl rsa -in roudouch.key -check
 ```
 
 It will verify and check the RSA key and if it is Ok it will display the following result.
@@ -72,16 +72,8 @@ The NGINX Crash Course
 
 # PHP-FPM 
 
-PHP-FPM is a FastCGI Process Manager, a daemon that manages the processes that execute PHP scripts. It is a replacement for the traditional PHP FastCGI implementation with some additional features useful for sites of any size, especially busier sites.
+Nginx doesn’t know how to run a PHP script of its own. It needs a PHP module like PHP-FPM to efficiently manage PHP scripts. PHP-FPM, on the other hand, runs outside the NGINX environment by creating its own process. Therefore when a user requests a PHP page the nginx server will pass the request to PHP-FPM service using FastCGI.
 
 ### PHP-FPM configuration
     
     - https://www.digitalocean.com/community/tutorials/php-fpm-nginx
-
-# MYSQL
-
-### Create a new user
-
-```bash
-CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
-```

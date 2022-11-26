@@ -6,27 +6,31 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/roudouch/Inception/data/db
-      o: bind
+      device: /home/roudouch/data/db
+      o: bind 
+      # When you use a bind mount, a file or directory on the host machine
+      # is mounted into a container.
       
   wp:
     name: wp
     driver: local
     driver_opts:
       type: none
-      device: /home/roudouch/Inception/data/wp
+      device: /home/roudouch/data/wp
       o: bind
 
 networks:
   Docker-Network:
     name: Docker-Network
-    driver: bridge
+    # a bridge network uses a software bridge which allows containers connected to the same bridge network to communicate,
+    # while providing isolation from containers which are not connected to that bridge network. 
+    driver: bridge 
 
 services:
   mariadb:
     container_name: mariadb
     build: ./requirements/mariaDB/
-    #image: mariadb
+    image: mariadb:database
     volumes:
       - db:/var/lib/mysql
     environment:
@@ -36,12 +40,12 @@ services:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     networks:
       - Docker-Network
-    restart: unless-stopped
+    restart: unless-stopped # unless-stopped, Similar to always , except that when the container is stopped (manually or otherwise), it is not restarted even after .
 
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress/
-    #image: wordpress
+    image: wordpress:website
     depends_on:
       - mariadb
     volumes:
@@ -50,12 +54,12 @@ services:
       - .env
     networks:
       - Docker-Network
-    restart: unless-stopped # unless-stopped, Similar to always , except that when the container is stopped (manually or otherwise), it is not restarted even after .
+    restart: unless-stopped 
   
   nginx:
     container_name: nginx
     build: ./requirements/nginx/
-    #image: nginx
+    image: nginx:webServer
     depends_on:
       - wordpress
     ports:

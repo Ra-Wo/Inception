@@ -1,6 +1,10 @@
-sed -i "s/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/" "/etc/php/7.3/fpm/pool.d/www.conf"
+# chown: change owner to user:group
+# www-data: first is username, second is group
+# -R: recursively, subfiles and subfolders
+
 chown -R www-data:www-data /var/www/*;
 chown -R 755 /var/www/*;
+
 mkdir -p /run/php/;
 touch /run/php/php7.3-fpm.pid;
 
@@ -12,8 +16,9 @@ if [ ! -f /var/www/html/wp-config.php ]; then
     wp core download --path=/var/www/html --allow-root
     wp core config --path=/var/www/html --dbname=${MYSQL_DATABASE} --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=mariadb --allow-root --skip-check
     wp core install --path=/var/www/html --url=${DOMAIN_NAME} --title="INCEPTION" --admin_user=${ADMIN_WP_USER} --admin_password=${ADMIN_WP_PASSWORD} --admin_email=${ADMIN_WP_EMAIL} --allow-root
-    #create user as root
+    # create user
     wp user create ${WP_USER} ${WP_USER_EMAIL} --user_pass=${WP_USER_PASSWORD} --path=/var/www/html --allow-root
 fi
 
+# takes any command line arguments passed to setup.sh and execs them as a command.
 exec "$@"
