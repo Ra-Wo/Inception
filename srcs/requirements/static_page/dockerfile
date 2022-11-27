@@ -17,6 +17,3 @@ EXPOSE 8080
 
 # run the app
 CMD ["node", "/app/app.js"]
-
-# make the container run in the foreground
-#CMD ["tail", "-f", "/dev/null"]
