@@ -61,11 +61,22 @@ services:
     build: ./requirements/nginx/
     image: nginx:webServer
     depends_on:
+      - staticpage
       - wordpress
     ports:
       - 443:443
     volumes:
       - wp:/var/www/html
+    networks:
+      - Docker-Network
+    restart: unless-stopped
+  
+  staticpage:
+    container_name: staticpage
+    build: ./requirements/static_page/
+    image: static_page:webServer
+    ports:
+      - 8080:8080
     networks:
       - Docker-Network
     restart: unless-stopped

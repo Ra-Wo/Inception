@@ -18,12 +18,12 @@ RUN echo 'group = www-data' >> /etc/php/7.3/fpm/pool.d/www.conf
 RUN echo 'listen = wordpress:9000' >> /etc/php/7.3/fpm/pool.d/www.conf
 RUN echo 'pm = dynamic' >> /etc/php/7.3/fpm/pool.d/www.conf
 RUN echo 'pm.start_servers = 6' >> /etc/php/7.3/fpm/pool.d/www.conf
-RUN echo 'pm.max_children = 25' >> /etc/php/7.3/fpm/pool.d/www.conf
+RUN echo 'pm.max_children = 25' >> /etc/php/7.3/fpm/pool.d/www.conf 
 RUN echo 'pm.min_spare_servers = 2' >> /etc/php/7.3/fpm/pool.d/www.conf
 RUN echo 'pm.max_spare_servers = 10' >> /etc/php/7.3/fpm/pool.d/www.conf
 
 # run setup script
-COPY ./config/setup.sh /setup.sh
+COPY ./conf/setup.sh /setup.sh
 RUN chmod +x /setup.sh
 ENTRYPOINT ["bash", "/setup.sh"]
 

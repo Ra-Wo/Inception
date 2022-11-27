@@ -1,0 +1,22 @@
+FROM debian:buster
+# update and upgrade
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y curl
+
+# install nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
+
+# copy static page to /app
+
+RUN mkdir /app
+COPY ./app/* /app/
+# install dependencies
+RUN cd /app && npm install
+
+EXPOSE 8080
+
+# run the app
+CMD ["node", "/app/app.js"]
+
+# make the container run in the foreground
+#CMD ["tail", "-f", "/dev/null"]

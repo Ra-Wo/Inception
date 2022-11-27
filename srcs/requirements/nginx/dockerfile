@@ -1,11 +1,11 @@
 FROM debian:buster
-# update and upgrade the apk packages and install nginx and openssl
+# update and upgrade and install nginx and openssl
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nginx && apt install -y openssl
 
-COPY ./config/default /etc/nginx/sites-available/default
-# generate the ssl certificate
+COPY ./conf/default /etc/nginx/sites-available/default
 RUN mkdir /etc/nginx/ssl
 
+# generate the ssl certificate
 RUN openssl req -new -newkey rsa:2048 -nodes -x509 -days 730 \
     -out /etc/nginx/ssl/roudouch.csr \
     -keyout /etc/nginx/ssl/roudouch.key \
