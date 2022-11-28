@@ -30,3 +30,6 @@ ENTRYPOINT ["bash", "/setup.sh"]
 # run php-fpm
 CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
 
+
+#   --nodaemonize
+#    Force to stay in foreground and ignore daemonize option from configuration file.
