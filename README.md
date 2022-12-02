@@ -1,4 +1,10 @@
-# OpenSSL 
+
+# NGINX
+
+The NGINX Crash Course 
+    - https://www.youtube.com/watch?v=7VAI73roXaY
+    
+### OpenSSL 
 
 OpenSSL is a cryptography software library or toolkit that makes communication over computer networks more secure. The OpenSSL program is a command-line tool for using the various cryptography functions of OpenSSL’s crypto library from the shell. It is generally used for Transport Layer Security(TSL) or Secure Socket Layer(SSL) protocols. OpenSSL is licensed under an apache-style license, which means that under some simple license conditions, one can use the toolkit for commercial or non-commercial purposes.
 
@@ -65,10 +71,6 @@ for more info :
 resources:
     - https://www.digicert.com/kb/ssl-support/openssl-quick-reference-guide.htm
 
-# NGINX
-
-The NGINX Crash Course 
-    - https://www.youtube.com/watch?v=7VAI73roXaY
 
 # PHP-FPM 
 
