@@ -79,3 +79,7 @@ Nginx doesn’t know how to run a PHP script of its own. It needs a PHP module l
 ### PHP-FPM configuration
     
     - https://www.digitalocean.com/community/tutorials/php-fpm-nginx
+
+### WP-CLI
+WP-CLI is the command-line interface for WordPress. You can update plugins, configure multisite installations and much more, without using a web browser.
+    - https://wp-cli.org/
